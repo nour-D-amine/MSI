@@ -649,9 +649,15 @@ button { cursor: pointer; border: none; font-family: inherit; }
   position: relative;
   padding: 120px 0 96px;
   overflow: hidden;
+  background-image: url('assets/img/cta-machine.png');
+  background-size: cover;
+  background-position: center;
 }
 .section-cta-bg {
-  display: none; /* Hide old background, let global video show through */
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(10, 14, 20, 0.78);
 }
 .section-cta .container { position: relative; z-index: 2; }
 .section-cta .label { margin-bottom: 24px; }
