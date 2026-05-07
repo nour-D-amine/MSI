@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travaux & Infrastructures — MSI</title>
+  <meta name="description" content="MSI - Travaux & Infrastructures. Déplacement, câblage, tuyauterie."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&family=Archivo+Narrow:wght@500;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Page specific overrides */
+    body { background-color: #0a0e14; }
+    
+    /* Sticky Nav adjustments for back link */
+    .nav { position: fixed; width: 100%; top: 28px; z-index: 100; background: rgba(10,14,20,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.08); }
+    
+    /* Hero Band */
+    .hero-band {
+      margin-top: 100px;
+      height: 280px;
+      background-color: #0d131c;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 80px 80px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-band-content {
+      padding: 0 80px;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+    }
+    .hero-band .label { margin-bottom: 16px; }
+    .hero-band .h1-display { 
+      font-size: clamp(48px, 6vw, 80px); 
+      line-height: 0.9; 
+      margin-bottom: 24px;
+    }
+    .hero-band .h1-display .serif-line { padding-left: 0; }
+    .hero-band .hero-tags {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .corner-tl, .corner-tr {
+      position: absolute;
+      top: 24px;
+      width: 16px;
+      height: 16px;
+    }
+    .corner-tl { left: 24px; border-top: 2px solid rgba(255,255,255,0.4); border-left: 2px solid rgba(255,255,255,0.4); }
+    .corner-tr { right: 24px; border-top: 2px solid rgba(255,255,255,0.4); border-right: 2px solid rgba(255,255,255,0.4); }
+
+    /* Interventions Section */
+    .section-interventions {
+      padding: 100px 80px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+    .interventions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 48px;
+    }
+    .intervention-card {
+      background: #0d131c;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .intervention-card-img {
+      width: 100%;
+      height: 220px;
+      background: #161c28;
+      margin-bottom: 32px;
+    }
+    .intervention-card-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .intervention-card-body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 32px;
+    }
+    .intervention-card-footer {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .intervention-tag {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .intervention-source {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      font-style: italic;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- 1. STICKY BAR -->
+  <div class="sticky-bar" id="sticky-bar">
+    <span class="sticky-bar-left">ON ARRIVE. ON ÉVALUE. ON RÈGLE. —<span class="dot"></span>INTERVENTIONS GRAND EST & LUXEMBOURG</span>
+    <span>FR · CABINET INDÉPENDANT / EST. <span class="year">2026</span></span>
+  </div>
+
+  <!-- 2. NAV -->
+  <nav class="nav" id="main-nav">
+    <div class="nav-logo">
+      <img class="nav-logo-icon" src="assets/img/msi-logo-white.png" alt="MSI — Maintenance Système Industriel"/>
+      <div class="nav-logo-divider"></div>
+      <div class="nav-logo-text">MAINTENANCE SYSTÈME<br/>INDUSTRIEL</div>
+    </div>
+    
+    <div style="display: flex; align-items: center;">
+      <a href="index.html#metiers" class="back-link">← Retour aux métiers</a>
+      <ul class="nav-menu" style="margin-left: 24px;">
+        <li><a href="index.html#metiers"><span class="num">01 /</span> Métiers</a></li>
+        <li><a href="index.html#references"><span class="num">02 /</span> Références</a></li>
+        <li><a href="index.html#fondateur"><span class="num">03 /</span> Le Fondateur</a></li>
+        <li><a href="index.html#contact"><span class="num">04 /</span> Contact</a></li>
+      </ul>
+    </div>
+    
+    <div class="nav-actions">
+      <a href="mailto:contact@msi-industriel.fr" class="btn btn-outline-sm">EMAIL</a>
+      <a href="https://wa.me/33643799251" class="btn btn-wa-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.555 4.123 1.525 5.857L.06 23.524l5.844-1.533A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.82c-1.92 0-3.753-.516-5.36-1.493l-.384-.228-3.985 1.045 1.064-3.89-.25-.398A9.794 9.794 0 012.18 12c0-5.422 4.398-9.82 9.82-9.82S21.82 6.578 21.82 12s-4.398 9.82-9.82 9.82z"/></svg>
+        WHATSAPP
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO BAND -->
+  <header class="hero-band">
+    <div class="corner-tl"></div>
+    <div class="corner-tr"></div>
+    <div class="hero-band-content reveal">
+      <p class="label"><span class="triangle">◣</span> 03 — TRAVAUX & INFRASTRUCTURES</p>
+      <h1 class="h1-display">
+        ON PLANIFIE.<br/>
+        <span class="serif-line" style="color: rgba(255,255,255,0.6);">on coordonne,</span>
+        <span style="color: var(--accent);">ON LIVRE.</span>
+      </h1>
+      <div class="hero-tags">DÉPLACEMENT · CÂBLAGE · TUYAUTERIE · INFRASTRUCTURE</div>
+    </div>
+  </header>
+
+  <!-- INTERVENTIONS -->
+  <section class="section-interventions">
+    <p class="label reveal"><span class="triangle">◣</span> NOS INTERVENTIONS</p>
+    <div class="interventions-grid">
+      <!-- CARD 1 -->
+      <div class="intervention-card reveal">
+        <div class="intervention-card-img" style="background-image: url('assets/img/tuyauterie.jpg'); background-size: cover; background-position: center;"></div>
+        <h3 class="intervention-card-title">RÉPARATION TUYAUTERIE ENTERRÉE</h3>
+        <p class="intervention-card-body">Réparation de conduite fonte enterrée — soudure et mise en place de placage sur conduite corrodée percée.</p>
+        <div class="intervention-card-footer">
+          <span class="intervention-tag">TUYAUTERIE · SOUDURE · FONTE</span>
+        </div>
+      </div>
+      <!-- CARD 2 -->
+      <div class="intervention-card reveal reveal-delay-1">
+        <div class="intervention-card-img" style="background-image: url('assets/img/chemin-cable.png'); background-size: cover; background-position: center;"></div>
+        <h3 class="intervention-card-title">INSTALLATION CHEMIN DE CÂBLE</h3>
+        <p class="intervention-card-body">Installation de chemin de câble en hauteur sur nacelle en environnement industriel actif.</p>
+        <div class="intervention-card-footer">
+          <span class="intervention-tag">CÂBLAGE · NACELLE · HAUTEUR</span>
+        </div>
+      </div>
+      <!-- CARD 3 -->
+      <div class="intervention-card reveal">
+        <div class="intervention-card-img" style="background-image: url('assets/img/rail-pont.jpg'); background-size: cover; background-position: center;"></div>
+        <h3 class="intervention-card-title">POSE DE RAIL PONT ROULANT</h3>
+        <p class="intervention-card-body">Pose de rail de pont roulant sur béton en environnement sidérurgique extérieur.</p>
+        <div class="intervention-card-footer">
+          <span class="intervention-tag">RAIL · PONT ROULANT</span>
+        </div>
+      </div>
+      <!-- CARD 4 -->
+      <div class="intervention-card reveal reveal-delay-1">
+        <div class="intervention-card-img" style="background-image: url('assets/img/unites-production.png'); background-size: cover; background-position: center;"></div>
+        <h3 class="intervention-card-title">DÉPLACEMENT UNITÉS DE PRODUCTION</h3>
+        <p class="intervention-card-body">Déplacement de plusieurs unités de production en environnement chaîne automobile — Stellantis.</p>
+        <div class="intervention-card-footer">
+          <span class="intervention-tag">PRODUCTION · AUTOMOBILE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RÉFÉRENCES -->
+  <section class="section-references" style="background: transparent; border-top: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="label"><span class="triangle">◣</span> DÉJÀ INTERVENU CHEZ</p>
+      </div>
+      <div class="ref-grid">
+        <div class="ref-item reveal"><div class="ref-name" style="font-family: var(--font-display); font-size: 18px; color: var(--text);">FORVIA</div></div>
+        <div class="ref-item reveal reveal-delay-1"><div class="ref-name" style="font-family: var(--font-display); font-size: 18px; color: var(--text);">STELLANTIS</div></div>
+        <div class="ref-item reveal reveal-delay-2"><div class="ref-name" style="font-family: var(--font-display); font-size: 18px; color: var(--text);">ARCELOR</div></div>
+        <div class="ref-item reveal reveal-delay-3"><div class="ref-name" style="font-family: var(--font-display); font-size: 18px; color: var(--text);">ENERGISERV</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section class="section-cta" style="background: #02060b;">
+    <div class="container">
+      <div class="cta-cards" style="max-width: 720px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div class="cta-card cta-card-wa reveal" style="background: rgba(37,211,102,0.05); border: 1px solid rgba(37,211,102,0.2);">
+          <h3 class="cta-card-title">WHATSAPP</h3>
+          <p class="cta-card-desc">Décrivez votre besoin, envoyez des photos du site. On revient vers vous avec une première estimation sous 24h.</p>
+          <a href="https://wa.me/33643799251" class="btn btn-wa">→ OUVRIR WHATSAPP</a>
+        </div>
+        <div class="cta-card cta-card-email reveal reveal-delay-1" style="background: #0d131c; border: 1px solid rgba(255,255,255,0.08);">
+          <h3 class="cta-card-title">EMAIL · DEVIS</h3>
+          <p class="cta-card-desc">Pour vos demandes de devis détaillés et plannings d'intervention.</p>
+          <p class="cta-card-contact">contact@msi-industriel.fr</p>
+          <a href="mailto:contact@msi-industriel.fr" class="btn btn-outline">CONTACT@MSI-INDUSTRIEL.FR</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" style="background: #02060b; padding: 40px 80px; border-top: 1px solid rgba(255,255,255,0.06);">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/img/msi-logo-white.png" alt="MSI" class="footer-logo"/>
+        <p class="footer-brand-pitch">Cabinet d'intervention en maintenance industrielle.<br/>Grand Est & Luxembourg.</p>
+      </div>
+      <div>
+        <h4 class="footer-col-title">MÉTIERS</h4>
+        <ul class="footer-links">
+          <li><a href="maintenance-industrielle.html">Maintenance industrielle</a></li>
+          <li><a href="remise-en-etat-atelier.html">Remise en état & atelier</a></li>
+          <li><a href="travaux-infrastructures.html">Travaux & infrastructures</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">ZONES</h4>
+        <ul class="footer-links">
+          <li><a href="#">Grand Est</a></li>
+          <li><a href="#">Luxembourg</a></li>
+          <li><a href="#">Moselle · Metz</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">CONTACT</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:contact@msi-industriel.fr">contact@msi-industriel.fr</a></li>
+          <li><a href="https://wa.me/33643799251">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 MSI · MAINTENANCE SYSTÈME INDUSTRIEL · SIREN 103 532 222</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
