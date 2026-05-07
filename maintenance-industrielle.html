@@ -125,6 +125,41 @@
       font-style: italic;
     }
 
+    @media (max-width: 768px) {
+      .hero-band { height: auto; min-height: 200px; padding: 32px 0; margin-top: 88px; }
+      .hero-band-content { padding: 0 24px; }
+      .hero-band .h1-display {
+        font-size: clamp(26px, 8vw, 36px);
+        line-height: 1.08;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      .hero-band .hero-tags { font-size: 9px; letter-spacing: 0.06em; }
+
+      .section-interventions { padding: 48px 20px; }
+      .interventions-grid {
+        display: flex;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 12px;
+        background: transparent;
+        border: none;
+        margin-top: 32px;
+        padding-bottom: 16px;
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        scrollbar-width: none;
+      }
+      .interventions-grid::-webkit-scrollbar { display: none; }
+      .intervention-card {
+        flex: 0 0 82vw;
+        scroll-snap-align: start;
+      }
+    }
+
   </style>
 </head>
 <body>
