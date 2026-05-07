@@ -319,52 +319,49 @@
 
     // Scroll-driven Video Background
     const bgVideo = document.getElementById('bg-video');
-    let rafId = null;
     
-    // Explicitly pause video on load
-    bgVideo.pause();
+    if (window.innerWidth <= 768) {
+      // MOBILE: Play video natively in a loop.
+      // Scrubbing via JS causes poor framerate and artifacts on mobile iOS decoders.
+      bgVideo.loop = true;
+      bgVideo.play().catch(e => console.log("Autoplay prevented by iOS Low Power Mode", e));
+    } else {
+      // DESKTOP: Scrub video on scroll
+      let rafId = null;
+      bgVideo.pause();
 
-    const updateVideoProgress = () => {
+      const updateVideoProgress = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        
+        if (maxScroll <= 0) return;
 
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      
-      if (maxScroll <= 0) return;
+        const scrollProgress = scrollTop / maxScroll;
+        
+        const videoDuration = 10;
+        let targetTime = scrollProgress * videoDuration;
+        targetTime = Math.max(0, Math.min(targetTime, videoDuration));
+        
+        if (!Number.isNaN(bgVideo.duration) && bgVideo.duration > 0) {
+          targetTime = Math.min(targetTime, bgVideo.duration);
+        }
+        
+        bgVideo.currentTime = targetTime;
+      };
 
-      const scrollProgress = scrollTop / maxScroll;
-      
-      // Map progress to exact video duration (0s -> 10s) as requested
-      const videoDuration = 10;
-      let targetTime = scrollProgress * videoDuration;
-      targetTime = Math.max(0, Math.min(targetTime, videoDuration));
-      
-      // Ensure we don't exceed actual video duration if it's shorter
-      if (!Number.isNaN(bgVideo.duration) && bgVideo.duration > 0) {
-        targetTime = Math.min(targetTime, bgVideo.duration);
-      }
-      
-      bgVideo.currentTime = targetTime;
-    };
+      const onScroll = () => {
+        if (!rafId) {
+          rafId = requestAnimationFrame(() => {
+            updateVideoProgress();
+            rafId = null;
+          });
+        }
+      };
 
-    const onScroll = () => {
-      if (!rafId) {
-        rafId = requestAnimationFrame(() => {
-          updateVideoProgress();
-          rafId = null;
-        });
-      }
-    };
-
-    // Ensure video is ready before starting to scrub
-    bgVideo.addEventListener('loadedmetadata', () => {
-      updateVideoProgress(); // Initial set
-    });
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => {
-      // Small delay on resize to ensure layout has updated before recalculating maxScroll
-      setTimeout(updateVideoProgress, 100);
-    });
+      bgVideo.addEventListener('loadedmetadata', updateVideoProgress);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', () => setTimeout(updateVideoProgress, 100));
+    }
   </script>
 </body>
 </html>

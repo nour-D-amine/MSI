@@ -53,6 +53,10 @@ body {
   will-change: transform;
 }
 
+.bg-video::-webkit-media-controls {
+  display: none !important;
+}
+
 .bg-overlay {
   position: fixed;
   inset: 0;
