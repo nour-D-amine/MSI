@@ -649,9 +649,6 @@ button { cursor: pointer; border: none; font-family: inherit; }
   position: relative;
   padding: 120px 0 96px;
   overflow: hidden;
-  background-image: url('assets/img/cta-machine.png');
-  background-size: cover;
-  background-position: center;
 }
 .section-cta-bg {
   position: absolute;
@@ -806,7 +803,12 @@ button { cursor: pointer; border: none; font-family: inherit; }
   .btn { min-height: 44px; }
 
   /* CTA final section */
-  .section-cta { padding: 48px 0; }
+  .section-cta {
+    padding: 48px 0;
+    background-image: url('assets/img/cta-machine.png');
+    background-size: cover;
+    background-position: center;
+  }
   .cta-cards { grid-template-columns: 1fr; gap: 16px !important; }
   .cta-card {
     backdrop-filter: none;
