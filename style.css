@@ -651,10 +651,7 @@ button { cursor: pointer; border: none; font-family: inherit; }
   overflow: hidden;
 }
 .section-cta-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: rgba(10, 14, 20, 0.78);
+  display: none;
 }
 .section-cta .container { position: relative; z-index: 2; }
 .section-cta .label { margin-bottom: 24px; }
@@ -808,6 +805,13 @@ button { cursor: pointer; border: none; font-family: inherit; }
     background-image: url('assets/img/cta-machine.png');
     background-size: cover;
     background-position: center;
+  }
+  .section-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 14, 20, 0.78);
+    z-index: 1;
   }
   .cta-cards { grid-template-columns: 1fr; gap: 16px !important; }
   .cta-card {
