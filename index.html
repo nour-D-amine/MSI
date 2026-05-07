@@ -14,6 +14,7 @@
 
   <!-- ═══ BACKGROUND VIDEO & OVERLAY ═══ -->
   <video class="bg-video" id="bg-video" src="assets/msi-background.mp4" autoplay muted playsinline preload="auto"></video>
+  <img class="bg-image" src="assets/img/hero.png" alt="">
   <div class="bg-overlay"></div>
 
   <!-- ═══ 1. STICKY BAR ═══ -->
@@ -311,58 +312,50 @@
 
   <!-- ═══ JS — Scroll Reveal & Video ═══ -->
   <script>
-    // Scroll Reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    const isMobile = window.innerWidth <= 768;
 
-    // Scroll-driven Video Background
-    const bgVideo = document.getElementById('bg-video');
-    let rafId = null;
-    
-    // Explicitly pause video on load
-    bgVideo.pause();
+    // Scroll Reveal — skipped on mobile (CSS already shows elements)
+    if (!isMobile) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
 
-    const updateVideoProgress = () => {
-      // Only run on desktop (width > 768px)
-      if (window.innerWidth <= 768) return;
+    // Scroll-driven Video Background — desktop only
+    if (!isMobile) {
+      const bgVideo = document.getElementById('bg-video');
+      let rafId = null;
 
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      
-      if (maxScroll <= 0) return;
+      bgVideo.pause();
 
-      const scrollProgress = scrollTop / maxScroll;
-      
-      const videoDuration = 10;
-      let targetTime = scrollProgress * videoDuration;
-      targetTime = Math.max(0, Math.min(targetTime, videoDuration));
-      
-      if (!Number.isNaN(bgVideo.duration) && bgVideo.duration > 0) {
-        targetTime = Math.min(targetTime, bgVideo.duration);
-      }
-      
-      bgVideo.currentTime = targetTime;
-    };
+      const updateVideoProgress = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        if (maxScroll <= 0) return;
+        const scrollProgress = scrollTop / maxScroll;
+        const videoDuration = 10;
+        let targetTime = Math.max(0, Math.min(scrollProgress * videoDuration, videoDuration));
+        if (!Number.isNaN(bgVideo.duration) && bgVideo.duration > 0) {
+          targetTime = Math.min(targetTime, bgVideo.duration);
+        }
+        bgVideo.currentTime = targetTime;
+      };
 
-    const onScroll = () => {
-      if (!rafId) {
-        rafId = requestAnimationFrame(() => {
-          updateVideoProgress();
-          rafId = null;
-        });
-      }
-    };
+      const onScroll = () => {
+        if (!rafId) {
+          rafId = requestAnimationFrame(() => { updateVideoProgress(); rafId = null; });
+        }
+      };
 
-    bgVideo.addEventListener('loadedmetadata', () => {
-      updateVideoProgress();
-    });
-    
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => {
-      setTimeout(updateVideoProgress, 100);
-    });
+      bgVideo.addEventListener('loadedmetadata', updateVideoProgress);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', () => { setTimeout(updateVideoProgress, 100); });
+    } else {
+      // Prevent video from downloading on mobile
+      const bgVideo = document.getElementById('bg-video');
+      if (bgVideo) { bgVideo.removeAttribute('src'); bgVideo.load(); }
+    }
   </script>
 </body>
 </html>
