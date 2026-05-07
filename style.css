@@ -783,10 +783,15 @@ button { cursor: pointer; border: none; font-family: inherit; }
 }
 
 @media (max-width: 768px) {
-  /* Video → static image */
+  /* Video → static image (hero-gears fixed behind everything) */
   .bg-video { display: none; }
   .bg-image { display: block; }
   body { background-color: #0a0e14; }
+
+  /* All sections get solid background to block the fixed gears image,
+     except .hero which stays transparent to show it */
+  section { background: #0a0e14; }
+  .hero { background: transparent; }
 
   /* Disable all scroll-reveal animations */
   .reveal { opacity: 1; transform: none; transition: none; }
