@@ -772,6 +772,7 @@ button { cursor: pointer; border: none; font-family: inherit; }
 }
 
 @media (max-width: 768px) {
+  .bg-video, .bg-overlay { display: none; }
   body { background-color: #0a0e14; }
   .sticky-bar { background: var(--bg-deep); justify-content: center; }
   .sticky-bar > span:last-child { display: none; } /* Hide right side of sticky bar */
