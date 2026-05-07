@@ -802,17 +802,16 @@ button { cursor: pointer; border: none; font-family: inherit; }
   /* CTA final section */
   .section-cta {
     padding: 48px 0;
-    background-image: url('assets/img/cta-machine.png');
-    background-size: cover;
-    background-position: center;
+    background: #0a0e14 url('assets/img/cta-machine.png') center / cover no-repeat;
   }
-  .section-cta::before {
-    content: '';
+  .section-cta-bg {
+    display: block;
     position: absolute;
-    inset: 0;
-    background: rgba(10, 14, 20, 0.78);
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 14, 20, 0.72);
     z-index: 1;
   }
+  .section-cta-bg img { display: none; }
   .cta-cards { grid-template-columns: 1fr; gap: 16px !important; }
   .cta-card {
     backdrop-filter: none;
