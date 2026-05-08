@@ -53,8 +53,14 @@ body {
   will-change: transform;
 }
 
-.bg-video::-webkit-media-controls {
+.bg-video::-webkit-media-controls,
+.bg-video::-webkit-media-controls-panel,
+.bg-video::-webkit-media-controls-overlay-play-button,
+.bg-video::-webkit-media-controls-start-playback-button,
+.bg-video::-webkit-media-controls-play-button {
   display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .bg-image,
