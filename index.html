@@ -332,17 +332,21 @@
       gsap.registerPlugin(ScrollTrigger);
       const bgVideo = document.getElementById('bg-video');
 
-      // playbackRate = 0 freezes without setting paused === true (avoids native play button)
-      bgVideo.playbackRate = 0;
+      // Freeze only AFTER autoplay fires — setting playbackRate=0 before play()
+      // triggers the browser's "video not started" overlay
+      bgVideo.addEventListener('play', () => {
+        bgVideo.playbackRate = 0;
+      }, { once: true });
 
       const initVideoScrub = () => {
-        ScrollTrigger.create({
-          trigger: document.body,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 0.5,
-          onUpdate: (self) => {
-            bgVideo.currentTime = self.progress * bgVideo.duration;
+        gsap.to(bgVideo, {
+          currentTime: bgVideo.duration,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.body,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.5,
           }
         });
       };
