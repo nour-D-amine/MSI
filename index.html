@@ -328,7 +328,8 @@
       const bgVideo = document.getElementById('bg-video');
       let rafId = null;
 
-      bgVideo.pause();
+      // playbackRate = 0 freezes the video without triggering the native play button overlay
+      bgVideo.playbackRate = 0;
 
       const updateVideoProgress = () => {
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -349,7 +350,10 @@
         }
       };
 
-      bgVideo.addEventListener('loadedmetadata', updateVideoProgress);
+      bgVideo.addEventListener('loadedmetadata', () => {
+        bgVideo.playbackRate = 0;
+        updateVideoProgress();
+      });
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', () => { setTimeout(updateVideoProgress, 100); });
     } else {
