@@ -341,45 +341,55 @@
       gsap.registerPlugin(ScrollTrigger);
       const bgVideo = document.getElementById('bg-video');
 
-      // Lecture normale obligatoire — ne JAMAIS pauser ni toucher playbackRate
-      bgVideo.muted = true;
-      bgVideo.playsInline = true;
-      bgVideo.play().catch(() => {});
-
-      // Si jamais le navigateur pause, on relance immédiatement
-      bgVideo.addEventListener('pause', () => {
-        bgVideo.play().catch(() => {});
-      });
+      let isReady = false;
+      let lastTargetTime = -1;
+      let isSeeking = false;
 
       const initVideoScrub = () => {
+        isReady = true;
         const dur = bgVideo.duration;
-        let targetTime = 0;
+
+        // Lancer la lecture puis immédiatement figer sur frame 0
+        bgVideo.play().then(() => {
+          bgVideo.pause();
+          bgVideo.currentTime = 0;
+        }).catch(() => {
+          bgVideo.currentTime = 0;
+        });
+
+        // Attendre que le seek soit terminé avant d'en lancer un nouveau
+        bgVideo.addEventListener('seeked', () => {
+          isSeeking = false;
+        });
 
         ScrollTrigger.create({
           trigger: document.body,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 0.5,
+          scrub: 1,
           onUpdate: (self) => {
-            targetTime = Math.min(self.progress * dur, dur - 0.05);
-          }
-        });
+            if (!isReady) return;
+            const targetTime = Math.min(self.progress * dur, dur - 0.05);
 
-        // Override currentTime à chaque frame — la vidéo "joue" toujours
-        // mais on la repositionne en permanence sur targetTime
-        function updateFrame() {
-          if (Math.abs(bgVideo.currentTime - targetTime) > 0.01) {
+            // Ne seek que si on a bougé d'au moins 1 frame (évite les seeks inutiles)
+            if (Math.abs(targetTime - lastTargetTime) < 0.033) return;
+
+            // Ne seek pas si un seek est déjà en cours (évite la file d'attente)
+            if (isSeeking) return;
+
+            lastTargetTime = targetTime;
+            isSeeking = true;
             bgVideo.currentTime = targetTime;
           }
-          requestAnimationFrame(updateFrame);
-        }
-        updateFrame();
+        });
       };
 
-      if (bgVideo.readyState >= 1) {
+      // Preload forcé : attendre que la vidéo soit vraiment prête
+      if (bgVideo.readyState >= 2) {
         initVideoScrub();
       } else {
-        bgVideo.addEventListener('loadedmetadata', initVideoScrub, { once: true });
+        bgVideo.addEventListener('canplay', initVideoScrub, { once: true });
+        bgVideo.load();
       }
     } else {
       // Prevent video from downloading on mobile
