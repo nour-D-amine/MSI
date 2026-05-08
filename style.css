@@ -51,18 +51,39 @@ body {
   z-index: 0;
   pointer-events: none;
   will-change: transform;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
-video::-webkit-media-controls,
-video::-webkit-media-controls-panel,
+.bg-video::-webkit-media-controls,
+.bg-video::-webkit-media-controls-enclosure,
+.bg-video::-webkit-media-controls-panel,
+.bg-video::-webkit-media-controls-overlay-enclosure,
+.bg-video::-webkit-media-controls-overlay-play-button,
+.bg-video::-webkit-media-controls-start-playback-button,
+.bg-video::-webkit-media-controls-play-button,
+.bg-video::-webkit-media-controls-timeline,
+.bg-video::-webkit-media-controls-current-time-display,
+.bg-video::-webkit-media-controls-time-remaining-display,
+.bg-video::-webkit-media-controls-mute-button,
+.bg-video::-webkit-media-controls-toggle-closed-captions-button,
+.bg-video::-webkit-media-controls-volume-slider,
+.bg-video::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Backup sélecteur générique */
 video::-webkit-media-controls-overlay-play-button,
-video::-webkit-media-controls-start-playback-button,
-video::-webkit-media-controls-play-button,
-video::-webkit-media-controls-timeline,
-video::-webkit-media-controls-current-time-display {
+video::-webkit-media-controls-start-playback-button {
   display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
+  -webkit-appearance: none !important;
 }
 
 .bg-image,

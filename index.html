@@ -13,7 +13,16 @@
 <body>
 
   <!-- ═══ BACKGROUND VIDEO & OVERLAY ═══ -->
-  <video class="bg-video" id="bg-video" src="assets/msi-background.mp4" autoplay muted playsinline preload="auto" disablepictureinpicture disableremoteplayback></video>
+  <video class="bg-video"
+       id="bg-video"
+       src="assets/msi-background.mp4"
+       muted
+       playsinline
+       webkit-playsinline
+       preload="auto"
+       disablepictureinpicture
+       disableremoteplayback
+       x-webkit-airplay="deny"></video>
   <img class="bg-image" src="assets/img/hero-gears.png" alt="">
   <img class="bg-image-2" src="assets/img/cta-machine.png" alt="">
   <div class="bg-overlay"></div>
@@ -332,27 +341,39 @@
       gsap.registerPlugin(ScrollTrigger);
       const bgVideo = document.getElementById('bg-video');
 
-      // Freeze on every play event (covers autoplay + any resume)
-      bgVideo.playbackRate = 0;
-      bgVideo.addEventListener('play', () => { bgVideo.playbackRate = 0; });
+      // Lecture normale obligatoire — ne JAMAIS pauser ni toucher playbackRate
+      bgVideo.muted = true;
+      bgVideo.playsInline = true;
+      bgVideo.play().catch(() => {});
 
-      // If anything pauses the video (GSAP internals, browser policy…), resume immediately
+      // Si jamais le navigateur pause, on relance immédiatement
       bgVideo.addEventListener('pause', () => {
-        bgVideo.play().then(() => { bgVideo.playbackRate = 0; }).catch(() => {});
+        bgVideo.play().catch(() => {});
       });
 
       const initVideoScrub = () => {
         const dur = bgVideo.duration;
+        let targetTime = 0;
+
         ScrollTrigger.create({
           trigger: document.body,
           start: 'top top',
           end: 'bottom bottom',
           scrub: 0.5,
           onUpdate: (self) => {
-            // Clamp just before end to avoid the video reaching ended=true
-            bgVideo.currentTime = Math.min(self.progress * dur, dur - 0.01);
+            targetTime = Math.min(self.progress * dur, dur - 0.05);
           }
         });
+
+        // Override currentTime à chaque frame — la vidéo "joue" toujours
+        // mais on la repositionne en permanence sur targetTime
+        function updateFrame() {
+          if (Math.abs(bgVideo.currentTime - targetTime) > 0.01) {
+            bgVideo.currentTime = targetTime;
+          }
+          requestAnimationFrame(updateFrame);
+        }
+        updateFrame();
       };
 
       if (bgVideo.readyState >= 1) {
