@@ -311,6 +311,10 @@
     </div>
   </footer>
 
+  <!-- ═══ GSAP + ScrollTrigger ═══ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
   <!-- ═══ JS — Scroll Reveal & Video ═══ -->
   <script>
     const isMobile = window.innerWidth <= 768;
@@ -323,39 +327,31 @@
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     }
 
-    // Scroll-driven Video Background — desktop only
+    // Scroll-driven Video Background — desktop only (GSAP ScrollTrigger)
     if (!isMobile) {
+      gsap.registerPlugin(ScrollTrigger);
       const bgVideo = document.getElementById('bg-video');
-      let rafId = null;
 
-      // playbackRate = 0 freezes the video without triggering the native play button overlay
+      // playbackRate = 0 freezes without setting paused === true (avoids native play button)
       bgVideo.playbackRate = 0;
 
-      const updateVideoProgress = () => {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        if (maxScroll <= 0) return;
-        const scrollProgress = scrollTop / maxScroll;
-        const videoDuration = 10;
-        let targetTime = Math.max(0, Math.min(scrollProgress * videoDuration, videoDuration));
-        if (!Number.isNaN(bgVideo.duration) && bgVideo.duration > 0) {
-          targetTime = Math.min(targetTime, bgVideo.duration);
-        }
-        bgVideo.currentTime = targetTime;
+      const initVideoScrub = () => {
+        ScrollTrigger.create({
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.5,
+          onUpdate: (self) => {
+            bgVideo.currentTime = self.progress * bgVideo.duration;
+          }
+        });
       };
 
-      const onScroll = () => {
-        if (!rafId) {
-          rafId = requestAnimationFrame(() => { updateVideoProgress(); rafId = null; });
-        }
-      };
-
-      bgVideo.addEventListener('loadedmetadata', () => {
-        bgVideo.playbackRate = 0;
-        updateVideoProgress();
-      });
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', () => { setTimeout(updateVideoProgress, 100); });
+      if (bgVideo.readyState >= 1) {
+        initVideoScrub();
+      } else {
+        bgVideo.addEventListener('loadedmetadata', initVideoScrub, { once: true });
+      }
     } else {
       // Prevent video from downloading on mobile
       const bgVideo = document.getElementById('bg-video');
