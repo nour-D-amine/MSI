@@ -332,21 +332,25 @@
       gsap.registerPlugin(ScrollTrigger);
       const bgVideo = document.getElementById('bg-video');
 
-      // Freeze only AFTER autoplay fires — setting playbackRate=0 before play()
-      // triggers the browser's "video not started" overlay
-      bgVideo.addEventListener('play', () => {
-        bgVideo.playbackRate = 0;
-      }, { once: true });
+      // Freeze on every play event (covers autoplay + any resume)
+      bgVideo.playbackRate = 0;
+      bgVideo.addEventListener('play', () => { bgVideo.playbackRate = 0; });
+
+      // If anything pauses the video (GSAP internals, browser policy…), resume immediately
+      bgVideo.addEventListener('pause', () => {
+        bgVideo.play().then(() => { bgVideo.playbackRate = 0; }).catch(() => {});
+      });
 
       const initVideoScrub = () => {
-        gsap.to(bgVideo, {
-          currentTime: bgVideo.duration,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: document.body,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 0.5,
+        const dur = bgVideo.duration;
+        ScrollTrigger.create({
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.5,
+          onUpdate: (self) => {
+            // Clamp just before end to avoid the video reaching ended=true
+            bgVideo.currentTime = Math.min(self.progress * dur, dur - 0.01);
           }
         });
       };
